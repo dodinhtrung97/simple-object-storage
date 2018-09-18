@@ -1,6 +1,6 @@
 package muic.backend.project0.controller;
 
-import muic.backend.project0.UploadFileResponse;
+import muic.backend.project0.response.UploadFileResponse;
 import muic.backend.project0.services.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
