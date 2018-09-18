@@ -1,4 +1,4 @@
-package muic.backend.project0;
+package muic.backend.project0.response;
 
 public class UploadFileResponse {
     private String fileName;

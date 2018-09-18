@@ -3,7 +3,7 @@ package muic.backend.project0.services;
 import com.mongodb.*;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSInputFile;
-import muic.backend.project0.FileStorageProperties;
+import muic.backend.project0.model.Bucket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,7 +23,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileStorageService {
 
-    private final Path fileStorageLocation;
+    private final Path bucketLocation;
 
     private Mongo mongo = new Mongo("localhost", 27017);
     private DB db = mongo.getDB("backend_upload");
@@ -31,17 +31,12 @@ public class FileStorageService {
 
     /**
      * Core storage service
-     * @param fileStorageProperties
+     * @param bucket
      */
     @Autowired
-    public FileStorageService(FileStorageProperties fileStorageProperties) {
-        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
+    public FileStorageService(Bucket bucket) {
+        this.bucketLocation = Paths.get(bucket.getName())
                 .toAbsolutePath().normalize();
-        try {
-            Files.createDirectories(this.fileStorageLocation);
-        } catch (Exception e) {
-            throw new RuntimeException("Fail to create directory");
-        }
     }
 
     /**
@@ -83,7 +78,7 @@ public class FileStorageService {
             metaData.put("fileName", fileName);
             collection.insert(metaData, WriteConcern.SAFE);
 
-            Path location = this.fileStorageLocation.resolve(fileName);
+            Path location = this.bucketLocation.resolve(fileName);
             Files.copy(multipartFile.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
@@ -99,7 +94,7 @@ public class FileStorageService {
      */
     public Resource loadFileAsResource(String fileName) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath = this.bucketLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists()) {
