@@ -6,6 +6,9 @@
 
 # User-specific stuff:
 .idea/*
+.mvn/*
+mvnw
+mvnw.cmd
 lib/*
 *.iml
 .idea/**/tasks.xml
