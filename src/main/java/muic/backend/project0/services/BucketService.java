@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,10 +39,9 @@ public class BucketService {
      * @param bucketname
      * @return
      */
-    public Bucket createBucket(String bucketname) {
-        if (misc.isBucketExist(bucketname)) {
-            throw new RuntimeException("Bucket already exist");
-        }
+    public Optional<Bucket> createBucket(String bucketname) {
+
+        Bucket bucket;
 
         if (!isValidBucketName(bucketname)) {
             throw new RuntimeException("Invalid bucket name");
@@ -51,12 +51,12 @@ public class BucketService {
             Path path = Paths.get(Variable.ROOT_FOLDER + bucketname);
             Files.createDirectories(path);
             long currentTime = new Date().getTime();
-            Bucket bucket = new Bucket(currentTime, currentTime, bucketname);
+            bucket = new Bucket(currentTime, currentTime, bucketname);
             bucketRepository.save(bucket);
-            return bucket;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return Optional.of(bucket);
     }
 
     /**
@@ -77,17 +77,23 @@ public class BucketService {
      * @param bucketname
      * @return
      */
-    public BucketDto listObjectsInBucket(String bucketname) {
+    public BucketDto listBucketObjects(String bucketname) {
 
         if (!misc.isBucketExist(bucketname)) {
-            throw new RuntimeException("Bucket not exist");
+            throw new RuntimeException("Bucket does not exist");
         }
 
         List<Object> objects = getAllObject(bucketname);
-        List<ObjectDto> objectDTOS = new ArrayList<>();
-        objects.forEach((object) -> objectDTOS.add(new ObjectDto(object.getName(), object.geteTag(), Long.toString(object.getCreated()), Long.toString(object.getModified()))));
+        List<ObjectDto> objectDtos = new ArrayList<>();
+        objects.forEach((object) -> objectDtos.add(new ObjectDto(object.getName(),
+                                                        object.geteTag(),
+                                                        Long.toString(object.getCreated()),
+                                                        Long.toString(object.getModified()))));
         Bucket bucket = bucketRepository.findByName(bucketname);
-        return new BucketDto(Long.toString(bucket.getCreated()), Long.toString(bucket.getModified()), bucket.getName(), objectDTOS);
+        BucketDto result = new BucketDto(Long.toString(bucket.getCreated()),
+                                            Long.toString(bucket.getModified()),
+                                            bucket.getName(), objectDtos);
+        return result;
     }
 
     /**

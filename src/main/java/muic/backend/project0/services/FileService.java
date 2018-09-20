@@ -94,7 +94,6 @@ public class FileService {
         } catch (IOException e) {
             throw new RuntimeException("Could not delete object");
         }
-
     }
 
     /**
