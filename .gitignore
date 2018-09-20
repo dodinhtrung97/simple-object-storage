@@ -14,7 +14,7 @@ lib/*
 .idea/**/tasks.xml
 .idea/dictionaries
 account.txt
-# Sensitive or high-churn files:
+# Sensitive or high-churn objects:
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.xml
@@ -34,7 +34,7 @@ cmake-build-debug/
 ## File-based project format:
 *.iws
 
-## Plugin-specific files:
+## Plugin-specific objects:
 
 # IntelliJ
 /out/

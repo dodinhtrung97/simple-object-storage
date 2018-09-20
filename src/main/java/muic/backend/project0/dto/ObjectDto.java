@@ -1,15 +1,19 @@
-package muic.backend.project0.model;
+package muic.backend.project0.dto;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-@ConfigurationProperties(prefix = "bucket")
-public class Bucket {
-
+public class ObjectDto {
     private String name;
-
+    private String eTag;
     private String created;
-
     private String modified;
+
+    public ObjectDto() {}
+
+    public ObjectDto(String name, String eTag, String created, String modified) {
+        this.name = name;
+        this.eTag = eTag;
+        this.created = created;
+        this.modified = modified;
+    }
 
     public String getName() {
         return name;
@@ -17,6 +21,14 @@ public class Bucket {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String geteTag() {
+        return eTag;
+    }
+
+    public void seteTag(String eTag) {
+        this.eTag = eTag;
     }
 
     public String getCreated() {
