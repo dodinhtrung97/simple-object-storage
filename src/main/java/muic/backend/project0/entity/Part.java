@@ -15,8 +15,6 @@ public class Part {
     private Integer length;
     private String md5;
 
-    public Part() {}
-
     public Part(Integer number, Integer length, String md5, Object object) {
         this.number = number;
         this.length = length;

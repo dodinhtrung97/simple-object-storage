@@ -15,11 +15,6 @@ public class ObjectPartComposite implements Serializable {
     @Column(name = "part_number")
     private Integer partNumber;
 
-    public ObjectPartComposite(Integer objectId, Integer partNumber) {
-        this.objectId = objectId;
-        this.partNumber = partNumber;
-    }
-
     public Integer getObjectId() {
         return objectId;
     }

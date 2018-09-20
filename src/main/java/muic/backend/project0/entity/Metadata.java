@@ -13,8 +13,6 @@ public class Metadata {
     @JoinColumn(name = "object_id")
     private Object object;
 
-    public Metadata() {}
-
     public Metadata(ObjectMetadataComposite id, String value) {
         this.id = id;
         this.value = value;

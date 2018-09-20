@@ -16,8 +16,6 @@ public class Bucket {
     @OneToMany(mappedBy = "bucket", cascade = CascadeType.ALL)
     private Set<Object> objects;
 
-    public Bucket() {}
-
     public Bucket(long created, long modified, String name) {
         this.created = created;
         this.modified = modified;

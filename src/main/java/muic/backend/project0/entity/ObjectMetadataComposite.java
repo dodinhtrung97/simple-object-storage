@@ -14,8 +14,6 @@ public class ObjectMetadataComposite {
     @Column(name = "metadata_name")
     private String metadataName;
 
-    public ObjectMetadataComposite() {}
-
     public ObjectMetadataComposite(Integer objectId, String metadataName) {
         this.objectId = objectId;
         this.metadataName = metadataName;
@@ -43,6 +41,7 @@ public class ObjectMetadataComposite {
             return true;
         if (!(fileStorage.getClass().getName() == "ObjectMetadataComposite"))
             return false;
+
         ObjectMetadataComposite that = (ObjectMetadataComposite) fileStorage;
         return Objects.equals(getObjectId(), that.getObjectId()) &&
                 Objects.equals(getMetadataName(), that.getMetadataName());

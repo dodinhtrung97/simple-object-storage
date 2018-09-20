@@ -5,7 +5,7 @@ import muic.backend.project0.entity.Object;
 import muic.backend.project0.entity.ObjectMetadataComposite;
 import muic.backend.project0.entity.Part;
 import muic.backend.project0.repository.BucketRepository;
-import muic.backend.project0.repository.FileRepository;
+import muic.backend.project0.repository.ObjectRepository;
 import muic.backend.project0.repository.MetadataRepository;
 import muic.backend.project0.repository.PartRepository;
 import muic.backend.project0.util.Variable;
@@ -29,7 +29,7 @@ public class FileService {
     BucketRepository bucketRepository;
 
     @Autowired
-    FileRepository objectRepository;
+    ObjectRepository objectRepository;
 
     @Autowired
     MetadataRepository metadataRepository;

@@ -5,7 +5,7 @@ import muic.backend.project0.dto.ObjectDto;
 import muic.backend.project0.entity.Bucket;
 import muic.backend.project0.entity.Object;
 import muic.backend.project0.repository.BucketRepository;
-import muic.backend.project0.repository.FileRepository;
+import muic.backend.project0.repository.ObjectRepository;
 import muic.backend.project0.util.Variable;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class BucketService {
     BucketRepository bucketRepository;
 
     @Autowired
-    FileRepository objectRepository;
+    ObjectRepository objectRepository;
 
     Misc misc = new Misc();
 
