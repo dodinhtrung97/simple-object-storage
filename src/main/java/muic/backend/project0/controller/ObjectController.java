@@ -47,12 +47,11 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.PUT)
-    public ResponseEntity addUpdateMetadataByKey(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("metadata") String metadata,
-            @RequestParam("key") String key,
-            @RequestBody String value
+    public ResponseEntity addUpdateMetadataByKey(@PathVariable("bucketName") String bucketName,
+                                                 @PathVariable("objectName") String objectName,
+                                                 @RequestParam("metadata") String metadata,
+                                                 @RequestParam("key") String key,
+                                                 @RequestBody String value
     ) {
         try {
             fileService.addUpdateMetadataByKey(bucketName, objectName, key, value);
@@ -63,11 +62,10 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", params = "metadata", method = RequestMethod.DELETE)
-    public ResponseEntity deleteMetadataByKey(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("metadata") String metadata,
-            @RequestParam("key") String key
+    public ResponseEntity deleteMetadataByKey(@PathVariable("bucketName") String bucketName,
+                                              @PathVariable("objectName") String objectName,
+                                              @RequestParam("metadata") String metadata,
+                                              @RequestParam("key") String key
     ) {
         try {
             fileService.deleteMetadataByKey(bucketName, objectName, key);
@@ -79,11 +77,10 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", params = "key", method = RequestMethod.GET)
-    public ResponseEntity getMetadataByKey(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("metadata") String metadata,
-            @RequestParam("key") String key
+    public ResponseEntity getMetadataByKey(@PathVariable("bucketName") String bucketName,
+                                           @PathVariable("objectName") String objectName,
+                                           @RequestParam("metadata") String metadata,
+                                           @RequestParam("key") String key
     ) {
         try {
             HashMap<String, String> ret = fileService.getMetadataByKey(bucketName, objectName, key);
@@ -98,10 +95,9 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", params = "metadata", method = RequestMethod.GET)
-    public ResponseEntity getAllMetadata(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("metadata") String metadata
+    public ResponseEntity getAllMetadata(@PathVariable("bucketName") String bucketName,
+                                         @PathVariable("objectName") String objectName,
+                                         @RequestParam("metadata") String metadata
     ) {
         try {
             HashMap<String, String> response = fileService.getAllMetadata(bucketName, objectName);
@@ -113,13 +109,12 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", params = "partNumber", method = RequestMethod.PUT)
-    public ResponseEntity handleUploadPart(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("partNumber") Integer partNumber,
-            @RequestHeader("Content-Length") Integer partSize,
-            @RequestHeader("Content-MD5") String partMd5,
-            HttpServletRequest requestServlet
+    public ResponseEntity handleUploadPart(@PathVariable("bucketName") String bucketName,
+                                           @PathVariable("objectName") String objectName,
+                                           @RequestParam("partNumber") Integer partNumber,
+                                           @RequestHeader("Content-Length") Integer partSize,
+                                           @RequestHeader("Content-MD5") String partMd5,
+                                           HttpServletRequest requestServlet
     ) {
         try {
             String md5 = fileService.saveObject(requestServlet, bucketName, objectName, partNumber, partSize, partMd5);
@@ -142,10 +137,9 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.DELETE)
-    public ResponseEntity deletePart(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("partNumber") Integer partNumber
+    public ResponseEntity deletePart(@PathVariable("bucketName") String bucketName,
+                                     @PathVariable("objectName") String objectName,
+                                     @RequestParam("partNumber") Integer partNumber
     ) {
         try {
             fileService.deletePart(bucketName, objectName, partNumber);
@@ -157,10 +151,9 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", params = "complete", method = RequestMethod.POST)
-    public ResponseEntity completeUpload(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestParam("complete") String complete
+    public ResponseEntity completeUpload(@PathVariable("bucketName") String bucketName,
+                                         @PathVariable("objectName") String objectName,
+                                         @RequestParam("complete") String complete
     ) {
         try {
             HashMap<String, String> result = fileService.completeUpload(bucketName, objectName);
@@ -172,7 +165,7 @@ public class ObjectController {
 
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (Exception e) {
-            String eTag = fileService.getETagByBucketAndobjectName(bucketName, objectName);
+            String eTag = fileService.getETagByBucketAndObjectName(bucketName, objectName);
             Long length = fileService.getObjectLength(bucketName, objectName);
 
             JsonObject response = new JsonObject();
@@ -186,11 +179,10 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.GET)
-    public ResponseEntity downloadObject(
-            @PathVariable("bucketName") String bucketName,
-            @PathVariable("objectName") String objectName,
-            @RequestHeader("range") Optional<String> range,
-            HttpServletResponse response
+    public ResponseEntity downloadObject(@PathVariable("bucketName") String bucketName,
+                                         @PathVariable("objectName") String objectName,
+                                         @RequestHeader("range") Optional<String> range,
+                                         HttpServletResponse response
     ) {
         FileInputStream input = null;
         try {
