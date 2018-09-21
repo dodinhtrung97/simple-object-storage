@@ -47,11 +47,11 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.PUT)
-    public ResponseEntity addUpdateMetadataByKey(@PathVariable("bucketName") String bucketName,
-                                                 @PathVariable("objectName") String objectName,
-                                                 @RequestParam("metadata") String metadata,
-                                                 @RequestParam("key") String key,
-                                                 @RequestBody String value
+    public ResponseEntity updateMetadataByKey(@PathVariable("bucketName") String bucketName,
+                                              @PathVariable("objectName") String objectName,
+                                              @RequestParam("metadata") String metadata,
+                                              @RequestParam("key") String key,
+                                              @RequestBody String value
     ) {
         try {
             fileService.addUpdateMetadataByKey(bucketName, objectName, key, value);
@@ -109,7 +109,7 @@ public class ObjectController {
     }
 
     @RequestMapping(value = "/{bucketName}/{objectName}", params = "partNumber", method = RequestMethod.PUT)
-    public ResponseEntity handleUploadPart(@PathVariable("bucketName") String bucketName,
+    public ResponseEntity handlePartUpload(@PathVariable("bucketName") String bucketName,
                                            @PathVariable("objectName") String objectName,
                                            @RequestParam("partNumber") Integer partNumber,
                                            @RequestHeader("Content-Length") Integer partSize,
@@ -200,10 +200,8 @@ public class ObjectController {
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
         } finally {
-            System.out.println("Finally");
             try {
                 if (input != null){
-                    System.out.println("close");
                     input.close();
                 }
             } catch (IOException e){

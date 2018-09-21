@@ -18,9 +18,9 @@ public interface PartRepository extends CrudRepository<Part, Integer> {
 
     /**
      * Find part by object id and part number
-     * @param fileId
+     * @param objectId
      * @param number
      * @return
      */
-    Part findByObjectIdAndNumber(Integer fileId, Integer number);
+    Part findByObjectIdAndNumber(Integer objectId, Integer number);
 }

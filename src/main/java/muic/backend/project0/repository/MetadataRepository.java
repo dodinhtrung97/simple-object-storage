@@ -12,8 +12,8 @@ public interface MetadataRepository extends CrudRepository<Metadata, ObjectMetad
 
     /**
      * Find object metadata by object id
-     * @param fileId
+     * @param objectId
      * @return
      */
-    List<Metadata> findByObjectId(Integer fileId);
+    List<Metadata> findByObjectId(Integer objectId);
 }
