@@ -46,31 +46,31 @@ public class ObjectController {
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.PUT)
     public ResponseEntity addUpdateMetadataByKey(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
-            @RequestParam("metadata") String metadataAction,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
+            @RequestParam("metadata") String metadata,
             @RequestParam("key") String key,
             @RequestBody String value
     ) {
         try {
-            fileService.addUpdateMetadataByKey(bucketname, objectname, key, value);
+            fileService.addUpdateMetadataByKey(bucketName, objectName, key, value);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", params = "metadata", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{bucketName}/{objectName}", params = "metadata", method = RequestMethod.DELETE)
     public ResponseEntity deleteMetadataByKey(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
-            @RequestParam("metadata") String metadataAction,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
+            @RequestParam("metadata") String metadata,
             @RequestParam("key") String key
     ) {
         try {
-            fileService.deleteMetadataByKey(bucketname, objectname, key);
+            fileService.deleteMetadataByKey(bucketName, objectName, key);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -78,15 +78,15 @@ public class ObjectController {
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", params = "key", method = RequestMethod.GET)
+    @RequestMapping(value = "/{bucketName}/{objectName}", params = "key", method = RequestMethod.GET)
     public ResponseEntity getMetadataByKey(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
             @RequestParam("metadata") String metadata,
             @RequestParam("key") String key
     ) {
         try {
-            HashMap<String, String> ret = fileService.getMetadataByKey(bucketname, objectname, key);
+            HashMap<String, String> ret = fileService.getMetadataByKey(bucketName, objectName, key);
             return ResponseEntity.ok(ret);
         } catch (Exception e) {
             if (e.getMessage() == "No value present") {
@@ -97,14 +97,14 @@ public class ObjectController {
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", params = "metadata", method = RequestMethod.GET)
+    @RequestMapping(value = "/{bucketName}/{objectName}", params = "metadata", method = RequestMethod.GET)
     public ResponseEntity getAllMetadata(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
             @RequestParam("metadata") String metadata
     ) {
         try {
-            HashMap<String, String> response = fileService.getAllMetadata(bucketname, objectname);
+            HashMap<String, String> response = fileService.getAllMetadata(bucketName, objectName);
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -112,17 +112,17 @@ public class ObjectController {
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", params = "partNumber", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{bucketName}/{objectName}", params = "partNumber", method = RequestMethod.PUT)
     public ResponseEntity handleUploadPart(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
             @RequestParam("partNumber") Integer partNumber,
             @RequestHeader("Content-Length") Integer partSize,
             @RequestHeader("Content-MD5") String partMd5,
             HttpServletRequest requestServlet
     ) {
         try {
-            String md5 = fileService.saveObject(requestServlet, bucketname, objectname, partNumber, partSize, partMd5);
+            String md5 = fileService.saveObject(requestServlet, bucketName, objectName, partNumber, partSize, partMd5);
 
             JsonObject response = new JsonObject();
             response.addProperty("md5", md5);
@@ -141,14 +141,14 @@ public class ObjectController {
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.DELETE)
     public ResponseEntity deletePart(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
             @RequestParam("partNumber") Integer partNumber
     ) {
         try {
-            fileService.deletePart(bucketname, objectname, partNumber);
+            fileService.deletePart(bucketName, objectName, partNumber);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -172,7 +172,7 @@ public class ObjectController {
 
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (Exception e) {
-            String eTag = fileService.getETagByBucketAndObjectName(bucketName, objectName);
+            String eTag = fileService.getETagByBucketAndobjectName(bucketName, objectName);
             Long length = fileService.getObjectLength(bucketName, objectName);
 
             JsonObject response = new JsonObject();
@@ -185,10 +185,10 @@ public class ObjectController {
         }
     }
 
-    @RequestMapping(value = "/{bucketname}/{objectname}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{bucketName}/{objectName}", method = RequestMethod.GET)
     public ResponseEntity downloadObject(
-            @PathVariable("bucketname") String bucketname,
-            @PathVariable("objectname") String objectname,
+            @PathVariable("bucketName") String bucketName,
+            @PathVariable("objectName") String objectName,
             @RequestHeader("range") Optional<String> range,
             HttpServletResponse response
     ) {
@@ -196,12 +196,12 @@ public class ObjectController {
         try {
             SequenceInputStream sequenceInputStream;
             if (range.isPresent()) {
-                sequenceInputStream = fileService.getObjectWithRange(bucketname, objectname, range.get(), input);
+                sequenceInputStream = fileService.getObjectWithRange(bucketName, objectName, range.get(), input);
             } else {
-                sequenceInputStream = fileService.getObject(bucketname, objectname);
+                sequenceInputStream = fileService.getObject(bucketName, objectName);
             }
-            response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", objectname));
-            response.setHeader("ETag", fileService.getETagByObjectName(objectname));
+            response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", objectName));
+            response.setHeader("ETag", fileService.getETagByobjectName(objectName));
 
             IOUtils.copyLarge(sequenceInputStream, response.getOutputStream());
             return ResponseEntity.ok().build();
