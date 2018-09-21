@@ -193,7 +193,7 @@ public class ObjectController {
                 sequenceInputStream = fileService.getObject(bucketName, objectName);
             }
             response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", objectName));
-            response.setHeader("ETag", fileService.getETagByobjectName(objectName));
+            response.setHeader("ETag", fileService.getETagByObjectName(objectName));
 
             IOUtils.copyLarge(sequenceInputStream, response.getOutputStream());
             return ResponseEntity.ok().build();
