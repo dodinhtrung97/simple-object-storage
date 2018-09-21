@@ -22,4 +22,12 @@ public interface ObjectRepository extends CrudRepository<Object, Integer> {
      * @return
      */
     List<Object> findByBucketId(Integer bucketId);
+
+    /**
+     * Find object by name and bucket id
+     * @param name
+     * @param bucketId
+     * @return
+     */
+    Object findByNameAndBucketId(String name, Integer bucketId);
 }

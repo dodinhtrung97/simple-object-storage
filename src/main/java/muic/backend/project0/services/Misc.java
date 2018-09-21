@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,5 +87,22 @@ public class Misc {
      */
     public Boolean isValidPartNumberRange(Integer partNumber) {
         return partNumber > 0 && partNumber <= 10000;
+    }
+
+    /**
+     * Parse start-end range
+     * @param range
+     * @return
+     */
+    public HashMap<String, Long> parseRange(String range) {
+        try {
+            String[] ranges = range.split("-");
+            return new HashMap<String, Long>(){{
+                put("start", Long.valueOf(ranges[0]));
+                put("end", Long.valueOf(ranges[1]));
+            }};
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
