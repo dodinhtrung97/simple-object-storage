@@ -8,7 +8,7 @@ import java.util.Set;
 public class Bucket {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private long created;
     private long modified;

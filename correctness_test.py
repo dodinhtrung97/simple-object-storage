@@ -50,5 +50,5 @@ def test_complete_upload():
     resp = requests.post(url)
     assert resp.status_code == STATUS_OK
 
-# test_create_bucket()
-test_drop_bucket()
+test_create_bucket()
+# test_drop_bucket()

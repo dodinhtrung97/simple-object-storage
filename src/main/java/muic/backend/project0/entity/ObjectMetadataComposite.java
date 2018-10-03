@@ -15,6 +15,8 @@ public class ObjectMetadataComposite implements Serializable {
     @Column(name = "metadata_name")
     private String metadataName;
 
+    public ObjectMetadataComposite() {}
+
     public ObjectMetadataComposite(Integer objectId, String metadataName) {
         this.objectId = objectId;
         this.metadataName = metadataName;

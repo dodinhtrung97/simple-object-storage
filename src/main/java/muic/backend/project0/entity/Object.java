@@ -8,12 +8,13 @@ import java.util.Set;
 public class Object {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String eTag;
     private long created;
     private long modified;
+    @Column(nullable = false, columnDefinition = "BIT", length = 1)
     private Boolean complete;
 
     @ManyToOne(fetch = FetchType.LAZY)
