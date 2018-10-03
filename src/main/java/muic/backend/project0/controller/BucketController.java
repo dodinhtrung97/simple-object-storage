@@ -31,7 +31,7 @@ public class BucketController {
             response.addProperty("modified", result.getModified());
             response.addProperty("name", result.getName());
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response.toString(), HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }

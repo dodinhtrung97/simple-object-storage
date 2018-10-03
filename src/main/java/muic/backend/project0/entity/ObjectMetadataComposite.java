@@ -2,11 +2,12 @@ package muic.backend.project0.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 import java.lang.Object;
 
 @Embeddable
-public class ObjectMetadataComposite {
+public class ObjectMetadataComposite implements Serializable {
 
     @Column(name = "object_id")
     private Integer objectId;

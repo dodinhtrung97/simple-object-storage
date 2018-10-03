@@ -3,6 +3,7 @@ package muic.backend.project0.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "metadata")
 public class Metadata {
 
     @EmbeddedId
@@ -10,8 +11,10 @@ public class Metadata {
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "object_id")
+    @JoinColumn(name = "object_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Object object;
+
+    public Metadata() {}
 
     public Metadata(ObjectMetadataComposite id, String value) {
         this.id = id;

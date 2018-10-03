@@ -43,8 +43,8 @@ public class BucketService {
 
         Bucket bucket;
 
-        if (!isValidBucketName(bucketname)) {
-            throw new RuntimeException("Invalid bucket name");
+        if (!isValidBucketName(bucketname) || misc.isBucketExist(bucketname)) {
+            throw new RuntimeException("Invalid bucket name or bucket already exists");
         }
 
         try {

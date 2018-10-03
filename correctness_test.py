@@ -27,46 +27,6 @@ def test_create_upload_ticket():
     resp = requests.post(BASE_URL + '/' + bucketname + '/' + objectname + '?create')
     assert resp.status_code == STATUS_OK
 
-def test_upload_part():
-    bucketname = 'test'
-    objectname = 'test.txt'
-    partNumber = 1
-    headers = {'Content-Type': 'application/octet-stream', 'Content-Length': 16, 'Content-MD5': 'a431efdb90680b8d31d6d5574b02f922'
-    files = {'file': open('~/Desktop/test.txt', 'rb')}
-    url = BASE_URL + '/' + bucketname + '/' + objectname + '?partNumber=' + partNumber
-    resp = requests.put(url, files=files, headers=headers)
-    assert resp.status_code == STATUS_OK
-
-def test_upload_invalid_md5():
-    bucketname = 'test'
-    objectname = 'test.txt'
-    partNumber = 1
-    headers = {'Content-Type': 'application/octet-stream', 'Content-Length': 16, 'Content-MD5': 'a431efdb90680b8d31d6d5574b02f92'
-    files = {'file': open('~/Desktop/test.txt', 'rb')}
-    url = BASE_URL + '/' + bucketname + '/' + objectname + '?partNumber=' + partNumber
-    resp = requests.put(url, files=files, headers=headers)
-    assert resp.status_code == STATUS_BAD_REQUEST
-
-def test_upload_invalid_part_number():
-    bucketname = 'test'
-    objectname = 'test.txt'
-    partNumber = 0
-    headers = {'Content-Type': 'application/octet-stream', 'Content-Length': 16, 'Content-MD5': 'a431efdb90680b8d31d6d5574b02f92'
-    files = {'file': open('~/Desktop/test.txt', 'rb')}
-    url = BASE_URL + '/' + bucketname + '/' + objectname + '?partNumber=' + partNumber
-    resp = requests.put(url, files=files, headers=headers)
-    assert resp.status_code == STATUS_BAD_REQUEST
-
-def test_upload_invalid_object_name():
-    bucketname = 'test'
-    objectname = 'test.txt..'
-    partNumber = 0
-    headers = {'Content-Type': 'application/octet-stream', 'Content-Length': 16, 'Content-MD5': 'a431efdb90680b8d31d6d5574b02f92'
-    files = {'file': open('~/Desktop/test.txt', 'rb')}
-    url = BASE_URL + '/' + bucketname + '/' + objectname + '?partNumber=' + partNumber
-    resp = requests.put(url, files=files, headers=headers)
-    assert resp.status_code == STATUS_BAD_REQUEST
-
 def test_delete_part():
     bucketname = 'test'
     objectname = 'test.txt'
@@ -89,3 +49,6 @@ def test_complete_upload():
     url = BASE_URL + '/' + bucketname + '/' + objectname + '?complete'
     resp = requests.post(url)
     assert resp.status_code == STATUS_OK
+
+# test_create_bucket()
+test_drop_bucket()

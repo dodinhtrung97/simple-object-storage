@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "object")
 public class Object {
 
     @Id
@@ -16,7 +17,7 @@ public class Object {
     private Boolean complete;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bucket_id")
+    @JoinColumn(name = "bucket_id", referencedColumnName = "id", nullable = false)
     private Bucket bucket;
 
     @OneToMany(mappedBy = "object", cascade = CascadeType.ALL)
@@ -24,6 +25,8 @@ public class Object {
 
     @OneToMany(mappedBy = "object", cascade = CascadeType.ALL)
     private Set<Metadata> metadata;
+
+    public Object() {}
 
     public int getId() {
         return id;

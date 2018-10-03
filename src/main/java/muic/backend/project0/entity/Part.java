@@ -3,13 +3,14 @@ package muic.backend.project0.entity;
 import javax.persistence.*;
 
 @Entity
-public class Part {
+@Table(name = "part")
+public class Part implements Comparable<Part>{
 
     @Id
     private Integer number;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "object_id")
+    @JoinColumn(name = "object_id", referencedColumnName = "id")
     private Object object;
 
     private Integer length;
@@ -21,6 +22,8 @@ public class Part {
         this.md5 = md5;
         this.object = object;
     }
+
+    public Part() {}
 
     public Integer getNumber() {
         return number;
@@ -52,5 +55,10 @@ public class Part {
 
     public void setMd5(String md5) {
         this.md5 = md5;
+    }
+
+    @Override
+    public int compareTo(Part o) {
+        return this.getNumber().compareTo(o.getNumber());
     }
 }
