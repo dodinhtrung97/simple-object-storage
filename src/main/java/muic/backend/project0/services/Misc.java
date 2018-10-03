@@ -1,6 +1,6 @@
 package muic.backend.project0.services;
 
-import muic.backend.project0.util.Variable;
+import muic.backend.project0.util.Constant;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +22,7 @@ public class Misc {
      * @return
      */
     public Boolean isBucketExist(String bucketname) {
-        Path bucketPath = Paths.get(Variable.ROOT_FOLDER + bucketname);
+        Path bucketPath = Paths.get(Constant.ROOT_FOLDER + bucketname);
         return Files.exists(bucketPath);
     }
 
@@ -33,7 +33,7 @@ public class Misc {
      * @return
      */
     public Boolean isObjectExist(String bucketname, String objectname) {
-        Path objectPath = Paths.get(Variable.ROOT_FOLDER + bucketname + "/" + objectname);
+        Path objectPath = Paths.get(Constant.ROOT_FOLDER + bucketname + "/" + objectname);
         return Files.exists(objectPath);
     }
 

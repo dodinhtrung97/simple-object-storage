@@ -6,7 +6,7 @@ import muic.backend.project0.entity.Bucket;
 import muic.backend.project0.entity.Object;
 import muic.backend.project0.repository.BucketRepository;
 import muic.backend.project0.repository.ObjectRepository;
-import muic.backend.project0.util.Variable;
+import muic.backend.project0.util.Constant;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class BucketService {
         }
 
         try {
-            Path path = Paths.get(Variable.ROOT_FOLDER + bucketname);
+            Path path = Paths.get(Constant.ROOT_FOLDER + bucketname);
             Files.createDirectories(path);
             long currentTime = new Date().getTime();
             bucket = new Bucket(currentTime, currentTime, bucketname);
@@ -65,7 +65,7 @@ public class BucketService {
      */
     public void deleteBucket(String bucketname) {
         try {
-            FileUtils.deleteDirectory(new File(Variable.ROOT_FOLDER + bucketname));
+            FileUtils.deleteDirectory(new File(Constant.ROOT_FOLDER + bucketname));
             bucketRepository.delete(bucketRepository.findByName(bucketname));
         } catch (IOException e) {
             throw new RuntimeException(e);

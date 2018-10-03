@@ -6,7 +6,7 @@ import muic.backend.project0.repository.BucketRepository;
 import muic.backend.project0.repository.MetadataRepository;
 import muic.backend.project0.repository.ObjectRepository;
 import muic.backend.project0.repository.PartRepository;
-import muic.backend.project0.util.Variable;
+import muic.backend.project0.util.Constant;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BoundedInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +86,7 @@ public class FileService {
         }
 
         try {
-            Path objectPath = Paths.get(Variable.ROOT_FOLDER + bucketName + "/" + objectName);
+            Path objectPath = Paths.get(Constant.ROOT_FOLDER + bucketName + "/" + objectName);
             if (Files.deleteIfExists(objectPath)) {
                 objectRepository.delete(objectRepository.findByName(objectName));
             }
@@ -209,7 +209,7 @@ public class FileService {
                 throw new RuntimeException("ObjectDto is already complete");
             }
 
-            Path partPath = Paths.get(Variable.ROOT_FOLDER + bucketName + "/" + fileName);
+            Path partPath = Paths.get(Constant.ROOT_FOLDER + bucketName + "/" + fileName);
             Object object = objectRepository.findByName(objectName);
             if (Files.deleteIfExists(partPath)) {
                 partRepository.delete(partRepository.findByObjectIdAndNumber(object.getId(), partNumber));
@@ -236,7 +236,7 @@ public class FileService {
      * @return
      */
     private Boolean isPartExist(String bucketname, String partName) {
-        Path partPath = Paths.get(Variable.ROOT_FOLDER + bucketname + "/" + partName);
+        Path partPath = Paths.get(Constant.ROOT_FOLDER + bucketname + "/" + partName);
         return Files.exists(partPath);
     }
 
@@ -295,13 +295,13 @@ public class FileService {
         try {
             ServletInputStream file = request.getInputStream();
             String fileName = getObjectName(objectName, partNumber);
-            if (!Files.exists(Paths.get(Variable.ROOT_FOLDER + bucketName))) {
+            if (!Files.exists(Paths.get(Constant.ROOT_FOLDER + bucketName))) {
                 throw new RuntimeException("Invalid Bucket");
             }
 
             if ((objectRepository.findByName(objectName).getComplete() == null ||
                     !objectRepository.findByName(objectName).getComplete()) &&
-                    !Files.exists(Paths.get(Variable.ROOT_FOLDER + bucketName + "/" + objectName))) {
+                    !Files.exists(Paths.get(Constant.ROOT_FOLDER + bucketName + "/" + objectName))) {
 
                 if (!misc.isValidPartNumberRange(partNumber)) {
                     throw new RuntimeException("Invalid Part Number");
@@ -315,9 +315,9 @@ public class FileService {
                     throw new RuntimeException("Length Mismatched");
                 }
 
-                File targetFile = new File(Variable.ROOT_FOLDER + bucketName + "/" + fileName);
+                File targetFile = new File(Constant.ROOT_FOLDER + bucketName + "/" + fileName);
                 FileUtils.copyInputStreamToFile(file, targetFile);
-                md5 = misc.stringToMd5(Variable.ROOT_FOLDER + bucketName + "/" + fileName);
+                md5 = misc.stringToMd5(Constant.ROOT_FOLDER + bucketName + "/" + fileName);
                 if (!partMd5.equals(md5)) {
                     throw new RuntimeException("MD5Mismatched");
                 }
@@ -392,7 +392,7 @@ public class FileService {
         boolean started = false;
         try {
             for (Part part : parts) {
-                input = new FileInputStream(Variable.ROOT_FOLDER + bucketName + "/" + getObjectName(objectName, part.getNumber()));
+                input = new FileInputStream(Constant.ROOT_FOLDER + bucketName + "/" + getObjectName(objectName, part.getNumber()));
                 long partLength = part.getLength() + currentPos;
 
                 if (end > currentPos) {
@@ -439,7 +439,7 @@ public class FileService {
 
         try {
             for (Part part : parts) {
-                input = new FileInputStream(Variable.ROOT_FOLDER +
+                input = new FileInputStream(Constant.ROOT_FOLDER +
                                             bucketName + "/" +
                                             getObjectName(objectName, part.getNumber()));
                 filesStream.add(input);
