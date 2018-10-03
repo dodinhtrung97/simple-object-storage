@@ -1,5 +1,8 @@
-FROM openjdk:10-jre-slim
-COPY ./target/project0-0.0.1-SNAPSHOT.jar .
-WORKDIR .
+FROM java:8
 EXPOSE 8080
-CMD ["java", "-jar", "project0-0.0.1-SNAPSHOT.jar"]
+
+ADD ./src/main/resources/application.properties ./application.properties
+ADD ./target/project0-0.0.1-SNAPSHOT.jar /webapi/project0-0.0.1-SNAPSHOT.jar
+WORKDIR /webapi
+VOLUME /webapi/bucket
+CMD ["java", "-jar", "./project0-0.0.1-SNAPSHOT.jar"]
