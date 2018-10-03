@@ -76,24 +76,23 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<!-- DO NOT include log4j.properties file in your Jar -->
-					<excludes>
-						<exclude>**/log4j.properties</exclude>
-					</excludes>
-					<archive>
-						<manifest>
-							<!-- Jar file entry point -->
-							<mainClass>com.mkyong.core.utils.App</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
+	  <plugins>
+	    <plugin>
+	      <groupId>io.fabric8</groupId>
+	      <artifactId>docker-maven-plugin</artifactId>
+	      <version>0.16.7</version>
+	      <configuration>
+	        <images>
+	          <image>
+	            <name>arquillian/age-checker:${project.version}</name>
+	            <build>
+	              <dockerFileDir>${project.basedir}</dockerFileDir>
+	            </build>
+	          </image>
+	        </images>
+	      </configuration>
+	    </plugin>
+	  </plugins>
 	</build>
 
 </project>
