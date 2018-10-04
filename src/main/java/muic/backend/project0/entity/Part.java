@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Table(name = "part")
 public class Part implements Comparable<Part>{
 
-    @Id
-    private Integer number;
+    @EmbeddedId
+    private ObjectPartComposite id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "object_id", referencedColumnName = "id")
@@ -16,8 +16,8 @@ public class Part implements Comparable<Part>{
     private Integer length;
     private String md5;
 
-    public Part(Integer number, Integer length, String md5, Object object) {
-        this.number = number;
+    public Part(ObjectPartComposite id, Integer length, String md5, Object object) {
+        this.id = id;
         this.length = length;
         this.md5 = md5;
         this.object = object;
@@ -25,12 +25,12 @@ public class Part implements Comparable<Part>{
 
     public Part() {}
 
-    public Integer getNumber() {
-        return number;
+    public ObjectPartComposite getId() {
+        return id;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setId(ObjectPartComposite id) {
+        this.id = id;
     }
 
     public Object getObject() {
@@ -59,6 +59,6 @@ public class Part implements Comparable<Part>{
 
     @Override
     public int compareTo(Part o) {
-        return this.getNumber().compareTo(o.getNumber());
+        return this.getId().getPartNumber().compareTo(o.getId().getPartNumber());
     }
 }

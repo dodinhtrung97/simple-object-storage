@@ -339,7 +339,7 @@ public class FileService {
     private void savePart(String objectName, Integer partNumber, Integer partSize, String partMd5) {
         try {
             Object object = objectRepository.findByName(objectName);
-            partRepository.save(new Part(partNumber, partSize, partMd5, object));
+            partRepository.save(new Part(new ObjectPartComposite(object.getId(), partNumber), partSize, partMd5, object));
             updateObjectETag(objectName);
         } catch (Exception e) {
             throw new RuntimeException("Fail to save part");
@@ -392,7 +392,7 @@ public class FileService {
         boolean started = false;
         try {
             for (Part part : parts) {
-                input = new FileInputStream(Constant.ROOT_FOLDER + bucketName + "/" + getObjectName(objectName, part.getNumber()));
+                input = new FileInputStream(Constant.ROOT_FOLDER + bucketName + "/" + getObjectName(objectName, part.getId().getPartNumber()));
                 long partLength = part.getLength() + currentPos;
 
                 if (end > currentPos) {
@@ -441,7 +441,7 @@ public class FileService {
             for (Part part : parts) {
                 input = new FileInputStream(Constant.ROOT_FOLDER +
                                             bucketName + "/" +
-                                            getObjectName(objectName, part.getNumber()));
+                                            getObjectName(objectName, part.getId().getPartNumber()));
                 filesStream.add(input);
             }
             return new SequenceInputStream(Collections.enumeration(filesStream));
