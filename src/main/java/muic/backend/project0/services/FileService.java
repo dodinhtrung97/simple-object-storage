@@ -7,7 +7,6 @@ import muic.backend.project0.repository.MetadataRepository;
 import muic.backend.project0.repository.ObjectRepository;
 import muic.backend.project0.repository.PartRepository;
 import muic.backend.project0.util.Constant;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BoundedInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @Service
@@ -247,7 +247,7 @@ public class FileService {
      * @param objectName
      * @return
      */
-    public HashMap<String, String> completeUpload(String bucketName, String objectName) {
+    public HashMap<String, String> completeUpload(String bucketName, String objectName) throws IOException {
         if (!misc.isBucketExist(bucketName)) {
             throw new RuntimeException("Invalid bucket name");
         }
@@ -317,8 +317,11 @@ public class FileService {
                 }
 
                 File targetFile = new File(Constant.ROOT_FOLDER + bucketName + "/" + fileName);
-                FileUtils.copyInputStreamToFile(file, targetFile);
-                md5 = misc.stringToMd5(Constant.ROOT_FOLDER + bucketName + "/" + fileName);
+                Files.copy(file, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                md5 = misc.fileToMd5(new File(Constant.ROOT_FOLDER + bucketName + "/" + fileName));
+                System.out.println("TEST HERE");
+                System.out.println("Source md5: " + partMd5);
+                System.out.println("Target md5: " + md5);
                 if (!partMd5.equals(md5)) {
                     throw new RuntimeException("MD5Mismatched");
                 }
@@ -481,7 +484,7 @@ public class FileService {
      * Update object's etag
      * @param objectName
      */
-    private void updateObjectETag(String objectName) {
+    private void updateObjectETag(String objectName) throws IOException {
         Object object = objectRepository.findByName(objectName);
         List<Part> parts = partRepository.findByObjectId(object.getId());
         long currentTime = new Date().getTime();

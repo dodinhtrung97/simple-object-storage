@@ -1,7 +1,10 @@
 package muic.backend.project0.services;
 
 import muic.backend.project0.util.Constant;
+import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -58,14 +61,24 @@ public class Misc {
      */
     public String stringToMd5(String input) {
         try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(StandardCharsets.UTF_8.encode(input));
-
-            return String.format("%032x", new BigInteger(1, md5.digest()));
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Failed to format string to md5");
+            return DigestUtils.md5Hex(input);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to calculate md5");
         }
-        return null;
+    }
+
+    /**
+     * Convert file to md5
+     * @param file
+     * @return
+     */
+    public String fileToMd5(File file) {
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            return DigestUtils.md5Hex(fis);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to calculate md5");
+        }
     }
 
     /**

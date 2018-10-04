@@ -124,7 +124,7 @@ public class ObjectController {
             response.addProperty("partSize", partSize);
             response.addProperty("partNumber", partNumber);
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response.toString(), HttpStatus.OK);
         } catch (Exception e) {
             JsonObject response = new JsonObject();
             response.addProperty("partMd5", partMd5);
@@ -132,7 +132,7 @@ public class ObjectController {
             response.addProperty("partNumber", partNumber);
             response.addProperty("error", e.getMessage());
 
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -163,7 +163,7 @@ public class ObjectController {
             response.addProperty("name", result.get("name"));
             response.addProperty("length", result.get("length"));
 
-            return new ResponseEntity(response, HttpStatus.OK);
+            return new ResponseEntity(response.toString(), HttpStatus.OK);
         } catch (Exception e) {
             String eTag = fileService.getETagByBucketAndObjectName(bucketName, objectName);
             Long length = fileService.getObjectLength(bucketName, objectName);
@@ -174,7 +174,7 @@ public class ObjectController {
             response.addProperty("name", objectName);
             response.addProperty("error", e.getMessage());
 
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 
