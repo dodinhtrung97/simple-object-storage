@@ -6,15 +6,15 @@ public class BucketDto {
     private String created;
     private String modified;
     private String name;
-    private List<ObjectDto> files;
+    private List<ObjectDto> objects;
 
     public BucketDto() {}
 
-    public BucketDto(String created, String modified, String name, List<ObjectDto> files) {
+    public BucketDto(String created, String modified, String name, List<ObjectDto> objects) {
         this.created = created;
         this.modified = modified;
         this.name = name;
-        this.files = files;
+        this.objects = objects;
     }
 
     public String getCreated() {
@@ -41,11 +41,11 @@ public class BucketDto {
         this.name = name;
     }
 
-    public List<ObjectDto> getFiles() {
-        return files;
+    public List<ObjectDto> getObjects() {
+        return objects;
     }
 
-    public void setFiles(List<ObjectDto> files) {
-        this.files = files;
+    public void setObjects(List<ObjectDto> objects) {
+        this.objects = objects;
     }
 }
