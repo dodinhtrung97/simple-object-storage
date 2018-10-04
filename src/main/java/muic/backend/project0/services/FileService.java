@@ -212,7 +212,8 @@ public class FileService {
             Path partPath = Paths.get(Constant.ROOT_FOLDER + bucketName + "/" + fileName);
             Object object = objectRepository.findByName(objectName);
             if (Files.deleteIfExists(partPath)) {
-                partRepository.delete(partRepository.findByObjectIdAndNumber(object.getId(), partNumber));
+                partRepository.delete(partRepository.findById(new ObjectPartComposite(object.getId(), partNumber))
+                                                                    .get());
             }
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());

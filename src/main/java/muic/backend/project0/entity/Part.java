@@ -10,7 +10,7 @@ public class Part implements Comparable<Part>{
     private ObjectPartComposite id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "object_id", referencedColumnName = "id")
+    @JoinColumn(name = "object_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Object object;
 
     private Integer length;

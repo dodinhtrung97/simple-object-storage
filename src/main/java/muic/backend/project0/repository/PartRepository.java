@@ -16,12 +16,4 @@ public interface PartRepository extends CrudRepository<Part, ObjectPartComposite
      * @return
      */
     List<Part> findByObjectId(Integer objectId);
-
-    /**
-     * Find part by object id and part number
-     * @param objectId
-     * @param number
-     * @return
-     */
-    Part findByObjectIdAndNumber(Integer objectId, Integer number);
 }
