@@ -13,8 +13,8 @@ services:
     environment:
       - DATABASE_HOST=database
       - DATABASE_USER=root
-      - DATABASE_PASSWORD=Sqrt(9)=3
-      - DATABASE_NAME=backend-project-0
+      - DATABASE_PASSWORD=root
+      - DATABASE_NAME=objectstorage
 
 
   database:
@@ -22,8 +22,8 @@ services:
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=backend-project-0
+      - MYSQL_DATABASE=objectstorage
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=Sqrt(9)=3
+      - MYSQL_PASSWORD=root
     volumes:
       - ./mysql-data:/var/lib/mysql:rw
